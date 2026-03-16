@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Nhập Liệu - Từ Điển Thuộc Linh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #e0e7ff;
+            --primary-dark: #4338ca;
+            --secondary: #ec4899;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --warning-bg: #fffbeb;
+            --warning-text: #b45309;
+            --danger-bg: #fee2e2;
+            --danger-text: #991b1b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            border-left: 4px solid;
+        }
+
+        .alert-warning {
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            border-color: #f59e0b;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Links Grid */
+        .grid-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .link-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .link-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            background: var(--bg);
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+        }
+
+        /* Data Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--bg);
+            text-align: left;
+            padding: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        code {
+            background: var(--bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            color: var(--primary-dark);
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+        }
+
+        .badge-required {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+        }
+
+        .badge-optional {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .zh-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1em;
+        }
+
+        /* Step Process */
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-num {
+            background: var(--primary);
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            th,
+            td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📖 Hướng Dẫn Thêm Từ Mới</h1>
+            <p class="subtitle">Hướng dẫn nhập liệu Từ Điển Thuộc Linh</p>
+        </header>
+
+        <!-- Important Notice -->
+        <div class="alert alert-warning">
+            <strong>⚠️ LƯU Ý QUAN TRỌNG:</strong>
+            Dữ liệu được đồng bộ từ Google Sheet mỗi <strong>5-10 phút</strong>.
+            Tuyệt đối không đổi tên cột (Header) để tránh làm hỏng hệ thống.
+        </div>
+
+        <!-- Quick Resources -->
+        <div class="grid-links">
+            <a href="https://docs.google.com/spreadsheets/d/1qTwcWdQY2YxELXoKUE4jaj9bpImpnfKGE3gAEQIqR_g/edit?usp=sharing"
+                target="_blank" class="link-card">
+                <div class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="8" y1="13" x2="16" y2="13" />
+                        <line x1="8" y1="17" x2="16" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
+                    </svg></div>
+                <div>
+                    <strong>Cơ sở dữ liệu chính</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Google Spreadsheet</div>
+                </div>
+            </a>
+            <a href="https://kinhthanh.bankhoiphuc.bible/" target="_blank" class="link-card">
+                <div class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        <path d="M8 7h8" />
+                        <path d="M8 11h8" />
+                        <path d="M8 15h5" />
+                    </svg></div>
+                <div>
+                    <strong>Kinh Thánh Tiếng Việt</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Bản Khôi Phục</div>
+                </div>
+            </a>
+            <a href="https://text.recoveryversion.bible/list/" target="_blank" class="link-card">
+                <div class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        <path d="M9 10h6" />
+                        <path d="M12 7v6" />
+                    </svg></div>
+                <div>
+                    <strong>English Bible</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Recovery Version</div>
+                </div>
+            </a>
+            <a href="https://www.recoveryversion.com.tw/gb/bible_menu.php" target="_blank" class="link-card">
+                <div class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        <circle cx="12" cy="11" r="3" />
+                    </svg></div>
+                <div>
+                    <strong>中文聖經</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">恢復本 (Recovery Ver.)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Data Dictionary -->
+        <div class="card">
+            <h2>🏗️ Cấu Trúc Bảng Dữ Liệu</h2>
+            <p style="margin-bottom: 1.5rem">Bảng dưới đây liệt kê tất cả các cột cần thiết. Vui lòng điền đúng thứ tự
+                và định dạng.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Tên Cột (Header)</th>
+                            <th style="width: 40%">Mô tả & Hướng dẫn</th>
+                            <th style="width: 40%">Ví dụ Mẫu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Basic Info -->
+                        <tr>
+                            <td colspan="3"
+                                style="background-color: var(--primary-light); font-weight: bold; color: var(--primary-dark); padding: 0.5rem 1rem;">
+                                1. Thông Tin Từ Vựng</td>
+                        </tr>
+                        <tr>
+                            <td><code>English</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Từ vựng tiếng Anh. Viết hoa chữ cái đầu.</td>
+                            <td>Resurrection</td>
+                        </tr>
+                        <tr>
+                            <td><code>Simplified</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Chữ Hán Giản thể.</td>
+                            <td class="zh-text">复活</td>
+                        </tr>
+                        <tr>
+                            <td><code>Traditional</code> <span class="badge badge-optional">Tùy chọn</span></td>
+                            <td>Chữ Hán Phồn thể. Nếu giống Giản thể có thể để trống hoặc điền lại.</td>
+                            <td class="zh-text">復活</td>
+                        </tr>
+                        <tr>
+                            <td><code>Pinyin</code> <span class="badge badge-optional">Khuyên dùng</span></td>
+                            <td>Phiên âm. Nên dùng <strong>dấu thanh điệu</strong> chuẩn thay vì số.</td>
+                            <td>fù huó</td>
+                        </tr>
+                        <tr>
+                            <td><code>Vietnamese</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Nghĩa tiếng Việt.</td>
+                            <td>Sự phục sinh</td>
+                        </tr>
+                        <tr>
+                            <td><code>Part_Of_Speech</code> <span class="badge badge-optional">Tùy chọn</span></td>
+                            <td>Loại từ (Noun, Verb, Adjective...)</td>
+                            <td>Noun</td>
+                        </tr>
+
+                        <!-- Bible Info -->
+                        <tr>
+                            <td colspan="3"
+                                style="background-color: var(--primary-light); font-weight: bold; color: var(--primary-dark); padding: 0.5rem 1rem;">
+                                2. Kinh Thánh Tham Khảo (Trilingual)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Verse</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Địa chỉ câu Kinh Thánh (Viết tắt chuẩn).</td>
+                            <td>Phil. 3:10</td>
+                        </tr>
+                        <tr>
+                            <td><code>Verse_EN</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Nội dung câu tiếng Anh.</td>
+                            <td>To know Him and the power of His resurrection...</td>
+                        </tr>
+                        <tr>
+                            <td><code>Verse_CN</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Nội dung câu tiếng Trung (Giản thể).</td>
+                            <td class="zh-text">使我认识基督、并祂复活的大能...</td>
+                        </tr>
+                        <tr>
+                            <td><code>Verse_VN</code> <span class="badge badge-required">Bắt buộc</span></td>
+                            <td>Nội dung câu tiếng Việt.</td>
+                            <td>để biết Ngài và quyền năng phục sinh của Ngài...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- How-to Guide -->
+        <div class="card">
+            <h2>📝 Quy Trình Thêm Từ Mới</h2>
+
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <div class="step-title">Tra cứu tư liệu</div>
+                    <p>Mở các trang Kinh Thánh (English, Tiếng Việt, Tiếng Trung) ở mục "Tài nguyên" phía trên. Tìm câu
+                        Kinh Thánh chứa từ khóa bạn muốn thêm.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <div class="step-title">Nhập liệu vào Google Sheet</div>
+                    <p>Mở Sheet Database. Tạo một hàng mới ở cuối cùng.</p>
+                    <div
+                        style="margin-top: 0.5rem; padding: 0.75rem; background: var(--bg); border-radius: 0.5rem; border-left: 3px solid var(--primary);">
+                        <strong>💡 Mẹo chuyên nghiệp:</strong> Hãy copy một hàng đã hoàn chỉnh ở phía trên và dán xuống
+                        dưới cùng (Paste), sau đó sửa lại nội dung. Cách này giúp bạn giữ đúng định dạng font chữ và
+                        không bị lệch cột.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <div class="step-title">Kiểm tra và Xuất bản</div>
+                    <p>Sau khi nhập, hãy kiểm tra chính tả. Google Sheet tự động lưu. Đợi khoảng 5 phút, vào ứng dụng Từ
+                        Điển và tìm kiếm từ khóa mới để xem kết quả hiển thị.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <h2>❓ Câu Hỏi Thường Gặp (FAQ)</h2>
+        <div style="margin-bottom: 2rem;">
+            <h3
+                style="margin-top: 0; color: var(--secondary); border-left: 4px solid var(--secondary); padding-left: 0.75rem; margin-bottom: 1rem;">
+                ✍️ Quy Tắc Nhập Liệu
+            </h3>
+            <details>
+                <summary>Lỗi Font chữ hoặc định dạng lạ khi copy từ Web khác?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    Khi copy từ các trang web (Wiki, Online Bible...), hãy dán bằng tổ hợp phím <strong>Ctrl + Shift
+                        + V</strong> (Windows) hoặc <strong>Cmd + Shift + V</strong> (Mac) để chỉ dán văn bản thuần,
+                    loại bỏ format rác.
+                </p>
+            </details>
+            <details>
+                <summary>Tôi có được phép đổi tên cột (Header) không?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    <strong>Tuyệt đối không.</strong> Hệ thống dựa vào tên cột chính xác (như
+                    <code>Simplified</code>, <code>Vietnamese</code>...) để đọc dữ liệu. Việc đổi tên sẽ làm hỏng
+                    chức năng tìm kiếm.
+                </p>
+            </details>
+            <details>
+                <summary>Tại sao Pinyin hiển thị không đẹp (a1, a2...)?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    Ứng dụng ưu tiên hiển thị Pinyin chuẩn Unicode có dấu thanh (ví dụ: <code>gǎn xiè</code> thay vì
+                    <code>gan3 xie4</code>). Hãy sử dụng bộ gõ Pinyin hoặc công cụ chuyển đổi để dữ liệu trông
+                    chuyên nghiệp nhất.
+                </p>
+            </details>
+            <details>
+                <summary>Một từ có nhiều nghĩa thì nhập thế nào?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    Hãy tạo <strong>các hàng riêng biệt</strong> cho mỗi nghĩa. Ví dụ: một hàng cho nghĩa danh từ,
+                    một hàng cho nghĩa động từ. Ứng dụng sẽ hiển thị tất cả kết quả liên quan.
+                </p>
+            </details>
+            <details>
+                <summary>Có được để hàng trống giữa các từ không?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    <strong>Không nên.</strong> Hàng trống có thể làm gián đoạn quá trình đọc dữ liệu. Hãy xóa bỏ
+                    các hàng trống để đảm bảo độ tin cậy.
+                </p>
+            </details>
+        </div>
+
+        <div style="margin-bottom: 0;">
+            <h3
+                style="margin-top: 0; color: #b45309; border-left: 4px solid #f59e0b; padding-left: 0.75rem; margin-bottom: 1rem;">
+                📖 Nội Dung Thuộc Linh
+            </h3>
+            <details>
+                <summary>Nên ưu tiên bản dịch Kinh Thánh nào?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    Chúng tôi khuyến nghị sử dụng <strong>Bản Khôi Phục (Recovery Version)</strong> cho cả 3 ngôn
+                    ngữ (Việt, Anh, Hoa) để đảm bảo tính nhất quán cao nhất về thuật ngữ và khải thị thuộc linh.
+                </p>
+            </details>
+            <details>
+                <summary>Cột "Verse" nên ghi tắt thế nào cho chuẩn?</summary>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                    Nên tuân theo quy chuẩn viết tắt của bản Kinh Thánh Khôi Phục. Ví dụ: <code>Mat.</code> (Ma-thi-ơ),
+                    <code>La.</code> (La Mã), <code>Khải.</code> (Khải Thị). Tránh viết tắt tùy tiện gây khó hiểu.
+                </p>
+            </details>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Spiritual Dictionary Project</p>
+    </footer>
+    </div>
+</body>
+
+</html>

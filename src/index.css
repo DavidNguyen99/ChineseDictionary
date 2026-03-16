@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  /* Spiritual palette based on light/peace/warmth */
+  --color-spiritual-50: #f8f9fa;
+  --color-spiritual-100: #f1f3f5;
+  --color-spiritual-200: #e9ecef;
+  --color-spiritual-300: #dee2e6;
+  --color-spiritual-400: #ced4da;
+  --color-spiritual-500: #868e96;
+  /* Darker than previous */
+  --color-spiritual-600: #495057;
+  /* Much darker for readable subtext */
+  --color-spiritual-700: #343a40;
+  /* High contrast */
+  --color-spiritual-800: #212529;
+  /* Nearly black */
+  --color-spiritual-900: #1a1d20;
+  /* Deep black */
+
+  /* Warm amber/gold tone for divinity/light */
+  --color-primary-50: #fff9db;
+  --color-primary-100: #fff3bf;
+  --color-primary-200: #ffec99;
+  --color-primary-300: #ffe066;
+  --color-primary-400: #ffd43b;
+  --color-primary-500: #fcc419;
+  --color-primary-600: #fab005;
+  --color-primary-700: #f59f00;
+  --color-primary-800: #f08c00;
+  --color-primary-900: #e67700;
+
+  /* Soft teal/cyan for peace/spirit */
+  --color-accent-50: #e3fafc;
+  --color-accent-100: #c5f6fa;
+  --color-accent-200: #99e9f2;
+  --color-accent-300: #66d9e8;
+  --color-accent-400: #3bc9db;
+  --color-accent-500: #22b8cf;
+  --color-accent-600: #15aabf;
+  --color-accent-700: #1098ad;
+  --color-accent-800: #0c8599;
+  --color-accent-900: #0b7285;
+
+  /* Fonts */
+  --font-serif: Merriweather, serif;
+  --font-sans: Inter, sans-serif;
+}
+
+/* Base styles using @layer base is deprecated/different in v4 but standard CSS works fine or @layer base works if setup */
+@layer base {
+  body {
+    @apply bg-spiritual-50 text-spiritual-900 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+}
