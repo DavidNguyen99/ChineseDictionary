@@ -21,7 +21,13 @@ export const useSpeech = () => {
         }
     }, []);
 
-    const speak = useCallback((text: string, lang: LanguageCode, rate: number = 0.8) => {
+    const speak = useCallback((
+        text: string, 
+        lang: LanguageCode, 
+        rate: number = 0.8,
+        onBoundary?: (event: SpeechSynthesisEvent) => void,
+        onEnd?: () => void
+    ) => {
         if (!window.speechSynthesis) {
             console.warn('Web Speech API not supported in this browser.');
             return;
@@ -33,6 +39,9 @@ export const useSpeech = () => {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = lang;
         utterance.rate = rate; // Use the provided rate
+
+        if (onBoundary) utterance.onboundary = onBoundary;
+        if (onEnd) utterance.onend = onEnd;
 
         // iOS/Safari often ignores .lang unless .voice is explicitly set
         if (voices.length > 0) {

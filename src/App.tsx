@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { ResultList } from './components/ResultList';
@@ -6,6 +6,7 @@ import { useDictionary } from './hooks/useDictionary';
 import { useWordSelection } from './hooks/useWordSelection';
 import { useTranslation } from './hooks/useTranslation';
 import { TranslationPopup } from './components/translation/TranslationPopup';
+import { KaraokeReader } from './components/KaraokeReader';
 
 // Actually, since I don't have the user's URL, I should probably put a placeholder UI or a default ONE if I had one.
 // The user request didn't provide one. I'll use an empty string and handle the "No Data" state gracefully
@@ -24,26 +25,61 @@ function App() {
   const { selection, setSelection } = useWordSelection();
   const { translation, loading: translationLoading } = useTranslation(selection.text, data, selection.isVisible);
 
+  const [viewMode, setViewMode] = useState<'dictionary' | 'karaoke'>('dictionary');
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-spiritual-50 to-spiritual-100 px-4 sm:px-6 lg:px-8 font-sans selection:bg-primary-200 connection-lines">
       <div className="max-w-4xl mx-auto pb-20">
         <Header />
 
-        <div className="sticky top-4 z-10 backdrop-blur-md rounded-2xl bg-white/30 p-2 shadow-sm border border-white/40 mb-8 transition-all duration-300">
-          <SearchBar
-            onSearch={search}
-            detectedLanguage={detectedLanguage}
-            currentQuery={currentQuery}
-          />
+        <div className="flex justify-center mb-6">
+            <div className="bg-white/50 backdrop-blur-md p-1 rounded-full border border-spiritual-200 flex shadow-sm">
+                <button
+                    onClick={() => setViewMode('dictionary')}
+                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                        viewMode === 'dictionary' 
+                            ? 'bg-primary-600 text-white shadow-md' 
+                            : 'text-spiritual-600 hover:text-spiritual-900'
+                    }`}
+                >
+                    Từ Điển
+                </button>
+                <button
+                    onClick={() => setViewMode('karaoke')}
+                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                        viewMode === 'karaoke' 
+                            ? 'bg-primary-600 text-white shadow-md' 
+                            : 'text-spiritual-600 hover:text-spiritual-900'
+                    }`}
+                >
+                    Luyện Đọc
+                </button>
+            </div>
         </div>
 
-        <main>
-          <ResultList
-            results={results}
-            loading={loading}
-            hasQuery={!!currentQuery}
-          />
-        </main>
+        {viewMode === 'dictionary' ? (
+          <>
+            <div className="sticky top-4 z-10 backdrop-blur-md rounded-2xl bg-white/30 p-2 shadow-sm border border-white/40 mb-8 transition-all duration-300">
+              <SearchBar
+                onSearch={search}
+                detectedLanguage={detectedLanguage}
+                currentQuery={currentQuery}
+              />
+            </div>
+
+            <main>
+              <ResultList
+                results={results}
+                loading={loading}
+                hasQuery={!!currentQuery}
+              />
+            </main>
+          </>
+        ) : (
+          <main>
+             <KaraokeReader dictionaryData={data} />
+          </main>
+        )}
       </div>
 
       {/* Translation Popup Portal/Overlay */}
