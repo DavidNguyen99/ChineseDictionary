@@ -14,14 +14,17 @@ export interface DictionaryEntry {
     Chinese: string;
 }
 
-const DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1qTwcWdQY2YxELXoKUE4jaj9bpImpnfKGE3gAEQIqR_g/edit?usp=sharing';
+const DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1y3z07xQm0g4Y1BrPboJeEUeYRczWAIKb/edit?gid=341621227#gid=341621227';
 
 const normalizeGoogleSheetUrl = (url: string): string => {
     if (url.includes('format=csv') || url.includes('output=csv')) return url;
 
     const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
     if (match && match[1]) {
-        return `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv`;
+        const docId = match[1];
+        const gidMatch = url.match(/[?&]gid=([0-9]+)/) || url.match(/#gid=([0-9]+)/);
+        const gidParam = gidMatch && gidMatch[1] ? `&gid=${gidMatch[1]}` : '';
+        return `https://docs.google.com/spreadsheets/d/${docId}/export?format=csv${gidParam}`;
     }
 
     return url;

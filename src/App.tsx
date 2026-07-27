@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { ResultList } from './components/ResultList';
@@ -17,7 +17,7 @@ function App() {
   // Using a sample URL or empty string. Ideally this is an Env Var.
   // For demo purposes, if this is empty, the app shows empty.
   // Use the provided Google Sheet URL as default
-  const sheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL || 'https://docs.google.com/spreadsheets/d/1qTwcWdQY2YxELXoKUE4jaj9bpImpnfKGE3gAEQIqR_g/edit?usp=sharing';
+  const sheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL || 'https://docs.google.com/spreadsheets/d/1y3z07xQm0g4Y1BrPboJeEUeYRczWAIKb/edit?gid=341621227#gid=341621227';
 
   const { data, results, loading, search, detectedLanguage, currentQuery } = useDictionary(sheetUrl);
 
@@ -25,7 +25,14 @@ function App() {
   const { selection, setSelection } = useWordSelection();
   const { translation, loading: translationLoading } = useTranslation(selection.text, data, selection.isVisible);
 
-  const [viewMode, setViewMode] = useState<'dictionary' | 'karaoke'>('dictionary');
+  const [viewMode, setViewMode] = useState<'dictionary' | 'karaoke'>(() => {
+    return (localStorage.getItem('app_viewMode') as 'dictionary' | 'karaoke') || 'dictionary';
+  });
+
+  // Save viewMode to localStorage whenever it changes
+  useEffect(() => {
+      localStorage.setItem('app_viewMode', viewMode);
+  }, [viewMode]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-spiritual-50 to-spiritual-100 px-4 sm:px-6 lg:px-8 font-sans selection:bg-primary-200 connection-lines">
