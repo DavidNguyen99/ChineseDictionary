@@ -107,7 +107,7 @@ export const BibleVerseDisplay: React.FC<BibleVerseDisplayProps> = ({
                         <p className="text-xl text-spiritual-800 font-medium font-serif">
                             <HighlightText text={verseCN} keyword={keywordCN} />
                         </p>
-                        <p className="text-sm text-spiritual-500 font-sans mt-1">{verseCNPinyin}</p>
+                        <p className="text-sm text-spiritual-700 font-sans mt-1 font-medium">{verseCNPinyin}</p>
                     </div>
                 )}
 
@@ -120,18 +120,36 @@ export const BibleVerseDisplay: React.FC<BibleVerseDisplayProps> = ({
                 )}
             </div>
 
-            {/* Quick Compare / Summary (Optional, maybe for "All" view) */}
-            <div className="mt-4 pt-3 border-t border-spiritual-100 flex gap-4 text-xs text-spiritual-400">
+            {/* Quick Compare / Summary (Cross Reference) */}
+            <div className="mt-4 pt-3 border-t border-spiritual-200/80 flex flex-col sm:flex-row gap-3 text-sm text-spiritual-800 font-serif">
                 {activeTab !== 'VN' && verseVN && (
-                    <div className="truncate flex-1">
-                        <span className="font-bold mr-1">VN:</span>
-                        <HighlightText text={verseVN} keyword={keywordVN} />
+                    <div className="flex items-start gap-2 flex-1">
+                        <span className="font-sans text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-spiritual-200 text-spiritual-800 shrink-0 mt-0.5">
+                            VN
+                        </span>
+                        <p className="leading-snug">
+                            <HighlightText text={verseVN} keyword={keywordVN} />
+                        </p>
                     </div>
                 )}
                 {activeTab !== 'CN' && verseCN && (
-                    <div className="truncate flex-1">
-                        <span className="font-bold mr-1">CN:</span>
-                        <HighlightText text={verseCN} keyword={keywordCN} />
+                    <div className="flex items-start gap-2 flex-1">
+                        <span className="font-sans text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-spiritual-200 text-spiritual-800 shrink-0 mt-0.5">
+                            CN
+                        </span>
+                        <p className="leading-snug">
+                            <HighlightText text={verseCN} keyword={keywordCN} />
+                        </p>
+                    </div>
+                )}
+                {activeTab !== 'EN' && verseEN && (
+                    <div className="flex items-start gap-2 flex-1">
+                        <span className="font-sans text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-spiritual-200 text-spiritual-800 shrink-0 mt-0.5">
+                            EN
+                        </span>
+                        <p className="leading-snug italic">
+                            <HighlightText text={verseEN} keyword={keywordEN} />
+                        </p>
                     </div>
                 )}
             </div>
