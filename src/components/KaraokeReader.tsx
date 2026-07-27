@@ -4,6 +4,8 @@ import type { DictionaryEntry } from '../services/api';
 import { segmentSentence, fetchSentenceTranslation } from '../services/sentenceParser';
 import type { ParsedToken } from '../services/sentenceParser';
 import { useSpeech } from '../hooks/useSpeech';
+import { useAudioSettings } from '../hooks/useAudioSettings';
+import { AudioSpeedSelector } from './AudioSpeedSelector';
 import { fetchExternalTranslation, fetchWordDefinitions, fetchWiktionaryDefinitions } from '../services/translationService';
 
 interface KaraokeReaderProps {
@@ -19,7 +21,7 @@ export const KaraokeReader: React.FC<KaraokeReaderProps> = ({ dictionaryData }) 
     // Playback state
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [activeIndex, setActiveIndex] = useState<number>(-1);
-    const [playbackRate, setPlaybackRate] = useState<number>(0.8);
+    const { speechRate } = useAudioSettings();
     
     const { speak } = useSpeech();
     const containerRef = useRef<HTMLDivElement>(null);
@@ -96,7 +98,7 @@ export const KaraokeReader: React.FC<KaraokeReaderProps> = ({ dictionaryData }) 
         speak(
             text, 
             'zh-CN', 
-            playbackRate, 
+            speechRate, 
             (event) => {
                 // onBoundary callback highlights text
                 setActiveIndex(event.charIndex);
@@ -140,7 +142,7 @@ export const KaraokeReader: React.FC<KaraokeReaderProps> = ({ dictionaryData }) 
                     className="w-full p-4 rounded-2xl bg-white border border-spiritual-200 focus:border-primary-400 focus:ring-4 focus:ring-primary-100/50 transition-all resize-none shadow-inner-sm text-lg text-spiritual-800"
                     rows={3}
                 />
-                <div className="flex gap-3 mt-4 justify-end">
+                <div className="flex gap-3 mt-4 justify-end items-center">
                     <button
                         onClick={() => handleParse(text)}
                         className="px-6 py-2.5 rounded-full bg-spiritual-100 text-spiritual-700 font-medium hover:bg-spiritual-200 transition-colors flex items-center gap-2"
@@ -150,21 +152,7 @@ export const KaraokeReader: React.FC<KaraokeReaderProps> = ({ dictionaryData }) 
                         Phân tích & Dịch
                     </button>
 
-                    <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-spiritual-200">
-                        <span className="text-xs font-semibold text-spiritual-400 w-10 text-center shrink-0">
-                            {playbackRate.toFixed(1)}x
-                        </span>
-                        <input
-                            type="range"
-                            min={0.3}
-                            max={1.5}
-                            step={0.1}
-                            value={playbackRate}
-                            onChange={(e) => setPlaybackRate(Number(e.target.value))}
-                            className="w-24 accent-primary-500 cursor-pointer"
-                            title={`Tốc độ: ${playbackRate.toFixed(1)}x`}
-                        />
-                    </div>
+                    <AudioSpeedSelector />
 
                     <button
                         onClick={handlePlay}
@@ -204,7 +192,7 @@ export const KaraokeReader: React.FC<KaraokeReaderProps> = ({ dictionaryData }) 
                                         setActiveIndex(-1);
                                         
                                         // Read only the specific word aloud
-                                        speak(token.text, 'zh-CN', playbackRate);
+                                        speak(token.text, 'zh-CN', speechRate);
                                     }}
                                 >
                                     <span className={`text-4xl md:text-5xl font-serif ${

@@ -78,9 +78,12 @@ export const fetchWordDefinitions = async (
   word: string,
   targetLang: string = 'vi'
 ): Promise<WordDefinition[]> => {
+  const trimmed = word ? word.trim() : '';
+  if (!trimmed || !/[\u4e00-\u9fa5]/.test(trimmed)) return [];
+
   try {
     // Add dt=md for definitions/examples
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=zh&tl=${targetLang}&dt=bd&dt=at&dt=md&dt=t&q=${encodeURIComponent(word)}`;
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=zh&tl=${targetLang}&dt=bd&dt=at&dt=md&dt=t&q=${encodeURIComponent(trimmed)}`;
     const res = await fetch(url);
     if (!res.ok) return [];
     
@@ -167,9 +170,14 @@ export interface WiktionaryEntry {
 export const fetchWiktionaryDefinitions = async (
   word: string
 ): Promise<WiktionaryEntry[]> => {
+  const trimmed = word ? word.trim() : '';
+  // Only query Wiktionary for Chinese headwords of length 1 to 4 characters
+  if (!trimmed || !/[\u4e00-\u9fa5]/.test(trimmed) || trimmed.length > 4) {
+    return [];
+  }
+
   try {
-    // English Wiktionary is much more detailed for Chinese characters
-    const url = `https://en.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(word)}`;
+    const url = `https://en.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(trimmed)}`;
     const res = await fetch(url, { headers: { accept: 'application/json' } });
     if (!res.ok) return [];
     
