@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { ResultList } from './components/ResultList';
@@ -97,6 +98,7 @@ function App() {
         loading={translationLoading}
         onClose={() => setSelection(prev => ({ ...prev, isVisible: false }))}
       />
+      <Analytics />
     </div>
   );
 }
